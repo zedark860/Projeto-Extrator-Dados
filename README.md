@@ -19,7 +19,7 @@ Este projeto foi criado para automatizar a extração de dados do site da Casa d
 
 - Extração de dados de websites (Selenium).
 - Organização dos dados (Pandas)
-- Armazenamento de dados em formatos diversos em Xlsx.
+- Armazenamento de dados em formato Xlsx.
 
 ## Tecnologias Utilizadas
 
