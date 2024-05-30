@@ -24,7 +24,7 @@ Este projeto foi criado para automatizar a extração de dados do site da Casa d
 ## Tecnologias Utilizadas
 
 - **Python**: Linguagem de programação principal.
-- **Bibliotecas de Selenium**: [BeautifulSoup](https://selenium-python.readthedocs.io/), [Undetected-Chromedriver](https://pypi.org/project/undetected-chromedriver/2.1.1/).
+- **Bibliotecas de Selenium**: [Selenium](https://selenium-python.readthedocs.io/), [Undetected-Chromedriver](https://pypi.org/project/undetected-chromedriver/2.1.1/).
 - **Pandas**: [Pandas](https://pandas.pydata.org/).
 
 ## Instalação
