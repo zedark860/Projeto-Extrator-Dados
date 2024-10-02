@@ -14,18 +14,15 @@ from datetime import datetime
 import ctypes
 import time
 import logging
-import csv
 import os
 import pandas as pd
 import undetected_chromedriver as uc
-import psutil
-import sys
 
 LOGGER.setLevel(logging.WARNING)
 ctypes.windll.kernel32.SetThreadExecutionState(0x80000002)
 
 class DataExtractor:
-    def __init__(self, url, url_base, xpath_proxima_pagina):
+    def _init_(self, url, url_base, xpath_proxima_pagina):
         self.url = url
         self.url_base = url_base
         self.xpath_proxima_pagina = xpath_proxima_pagina
@@ -70,9 +67,8 @@ class DataExtractor:
     def configurar_opcoes_chrome():
         chrome_options = webdriver.ChromeOptions()
         arguments = [
-            '--start-maximized',
             '--disable-extensions',
-            "--disable-blink-features=AutoplayIgnoreWebAudio",
+            '--disable-blink-features=AutoplayIgnoreWebAudio',
             '--blink-settings=imagesEnabled=false',
             '--disable-gpu',
             '--disable-accelerated-2d-canvas',
@@ -80,7 +76,8 @@ class DataExtractor:
             '--disable-infobars',
             '--disable-sync',
             '--disable-autofill',
-            "--disable-blink-features=MediaEngagementBypassAutoplayPolicies",
+            '--disable-blink-features=MediaEngagementBypassAutoplayPolicies',
+            '--kiosk',
             '--disable-site-isolation-trials'
         ]
         for arg in arguments:
@@ -206,11 +203,11 @@ class DataExtractor:
 
     def salvar_informacoes(self, informacoes, dados_extraidos, contador):
         try:
-            nome_pasta = 'Extração'
-            if not os.path.exists(nome_pasta):
-                os.makedirs(nome_pasta)
+            caminho_pasta = os.getcwd() + '\\Extracão'
+            if not os.path.isdir(caminho_pasta):
+                os.makedirs(caminho_pasta)
             
-            nome_arquivo = f'{nome_pasta}/dados_extraidos_{self.data_formatada.replace(":", "_").replace("/", "-")}.xlsx'
+            nome_arquivo = f'{caminho_pasta}\\dados_extraidos_{self.data_formatada.replace(":", "_").replace("/", "-")}.xlsx'
             if not os.path.exists(nome_arquivo):
                 header = ['Razão Social', 'CNPJ', 'Sócio', 'Nome Fantasia', 'Telefone', 'Telefone 2', 'E-mail',
                         'Data de Abertura', 'Situação Cadastral', 'Capital Social', 'Capital Social 2', 'CNAE', 'MEI', 'MEI 2',
@@ -224,7 +221,7 @@ class DataExtractor:
             dados_extraidos.append(informacoes)
             print(f"\n{contador + 1} empresas foram salvas na planilha às {self.data_formatada}. (Empresa {informacoes[0]})\n")
         except Exception as e:
-            print(f"Erro ao salvar empresa {informacoes[0]}")
+            print(f"Erro ao salvar empresa {informacoes[0]}: {e}")
 
     def extrair_e_salvar_dados(self, driver, urls_armazenados):
         print(f"Extraindo dados detalhados de {len(urls_armazenados)} CNPJs...")
@@ -251,7 +248,7 @@ class DataExtractor:
         except Exception as e:
             print(f"Erro inesperado: {e}")
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     url = 'https://casadosdados.com.br/solucao/cnpj/pesquisa-avancada'
     url_base = 'https://casadosdados.com.br/solucao/cnpj/'
     xpath_proxima_pagina = 'pagination-next'
